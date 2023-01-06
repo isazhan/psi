@@ -1,1 +1,4 @@
 psivenv/
+__pycache__/
+/psi/dbconfig.json
+/psi/secretkey.txt
