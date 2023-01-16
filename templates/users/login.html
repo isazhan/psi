@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 
@@ -10,22 +11,28 @@
 <section class="vh-100" style="background-color: #202124;">
     <div class="container py-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-4">
                 <div class="card shadow-2-strong" style="border-radius: 1rem;">
-                    <div class="card-body p-5 text-center">
 
-                        <h3 class="mb-4">Вход</h3>
+                    <a class="d-flex justify-content-center mt-4" href="#">
+                        <img src="{% static 'base/PSI.png' %}" alt="Logo" width="200">
+                    </a>
 
+                    <div class="card-body p-4 text-center">
+                        
                         <form action="{% url 'login_user' %}" method="POST">
                             {% csrf_token %}
 
                             <div class="mb-3 mt-3">
                                 <label for="email" class="form-label">Email:</label>
-                                <input class="form-control" id="email" placeholder="Enter email" name="username">
+                                <div class="input-group">
+                                    <input class="form-control" id="email" placeholder="Enter email" name="username">
+                                    <span class="input-group-text">@psi-group.kz</span>
+                                </div>
                             </div>
 
                             <div class="mb-3">
-                                <label for="pwd" class="form-label">Password:</label>
+                                <label for="pwd" class="form-label">Пароль:</label>
                                 <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="password">
                             </div>
                             <!--
@@ -35,7 +42,7 @@
                                 </label>
                             </div>
                             -->
-                            <button type="submit" class="btn btn-primary">Submit</button>                          
+                            <button type="submit" class="btn btn-primary">Login</button>                          
                         </form>
 
                     </div>
