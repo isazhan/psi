@@ -34,3 +34,8 @@ def profile(request):
     }
     template = loader.get_template('users/profile.html')
     return HttpResponse(template.render(context, request))
+
+
+@login_required
+def vacation(request):
+    return render(request, 'users/vacation.html')
