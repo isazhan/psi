@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout, models
 from django.template import loader
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
+from . import models as tables
 
 
 def login_user(request):
@@ -39,3 +40,15 @@ def profile(request):
 @login_required
 def vacation(request):
     return render(request, 'users/vacation.html')
+
+
+@login_required
+def add_vacation(request):
+    if request.method == "POST":
+        startdate = request.POST['startdate']
+        finishdate = request.POST['finishdate']
+        data = tables.Vacations(username=request.user, startdate=startdate, finishdate=finishdate)
+        data.save()
+        return render(request, 'users/vacation.html')
+    else:
+        return render(request, 'users/vacation.html')

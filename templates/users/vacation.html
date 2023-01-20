@@ -27,7 +27,7 @@
                     <div class="col-6 p-3 border border-secondary rounded">
                         <p class="h2">Заявление</p>
                         <p class="h5">на предоставление ежегодного оплачиваемого трудового отпуска</p>
-                        <form action="" method="POST">
+                        <form action="{% url 'add_vacation' %}" method="POST">
                             {% csrf_token %}
 
                             <div>
@@ -37,7 +37,7 @@
 
                             <div>
                                 <label for="finish" class="form-label">по</label>
-                                <input type="date" name="startdate">
+                                <input type="date" name="finishdate">
                             </div>
 
                             <button type="submit" class="btn btn-success">Отправить запрос</button>
