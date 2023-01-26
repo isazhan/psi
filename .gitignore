@@ -1,6 +1,5 @@
 psivenv/
 venv/
 __pycache__/
-migrations/
 /psi/dbconfig.json
 /psi/secretkey.txt

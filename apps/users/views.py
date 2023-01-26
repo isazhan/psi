@@ -1,10 +1,9 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout, models
+from django.contrib.auth import authenticate, login, logout
 from django.template import loader
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-from . import models as tables
-from .models import Vacations
+from .models import *
 
 
 def login_user(request):
@@ -28,7 +27,7 @@ def logout_user(request):
 
 @login_required
 def profile(request):
-    users = models.User.objects.get(username=request.user)
+    users = CustomUser.objects.get(username=request.user)
     context = {
         'firstname': users.first_name,
         'lastname': users.last_name,
@@ -48,7 +47,7 @@ def add_vacation(request):
     if request.method == "POST":
         startdate = request.POST['startdate']
         finishdate = request.POST['finishdate']
-        data = tables.Vacations(username=request.user, startdate=startdate, finishdate=finishdate, supervisor='На рассмотрении')
+        data = Vacations(username=request.user, startdate=startdate, finishdate=finishdate, supervisor='На рассмотрении')
         data.save()
         return render(request, 'users/vacation.html')
     else:
