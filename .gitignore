@@ -1,4 +1,5 @@
 psivenv/
+venv/
 __pycache__/
 migrations/
 /psi/dbconfig.json
