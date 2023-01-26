@@ -4,6 +4,7 @@ from django.template import loader
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from . import models as tables
+from .models import Vacations
 
 
 def login_user(request):
@@ -47,8 +48,16 @@ def add_vacation(request):
     if request.method == "POST":
         startdate = request.POST['startdate']
         finishdate = request.POST['finishdate']
-        data = tables.Vacations(username=request.user, startdate=startdate, finishdate=finishdate)
+        data = tables.Vacations(username=request.user, startdate=startdate, finishdate=finishdate, supervisor='На рассмотрении')
         data.save()
         return render(request, 'users/vacation.html')
     else:
         return render(request, 'users/vacation.html')
+
+@login_required
+def application(request):
+    applications = Vacations.objects.filter(username=request.user.id).values()
+    print(applications)
+
+    return render(request, 'users/application.html', {'applications': applications})
+
