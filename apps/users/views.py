@@ -53,10 +53,29 @@ def add_vacation(request):
     else:
         return render(request, 'users/vacation.html')
 
+
 @login_required
 def application(request):
     applications = Vacations.objects.filter(username=request.user.id).values()
-    print(applications)
-
     return render(request, 'users/application.html', {'applications': applications})
 
+
+@login_required
+def sign_applications(request):
+    # for supervisor
+    vacations = Vacations.objects.select_related('username').filter(username__supervisor=request.user)
+    """
+    for x in apps:
+        print(x.supervisor, x.username.supervisor)
+        print(type(x.username.supervisor))
+    """
+    context = {
+        'vacations': vacations
+    }
+    template = loader.get_template('users/sign_applications.html')
+    return HttpResponse(template.render(context, request))
+
+
+@login_required
+def accept_applications(request, applications_id):
+    print(applications_id)
