@@ -63,12 +63,16 @@ def application(request):
 @login_required
 def sign_applications(request):
     # for supervisor
-    vacations = Vacations.objects.select_related('username').filter(username__supervisor=request.user)
-    """
-    for x in apps:
-        print(x.supervisor, x.username.supervisor)
-        print(type(x.username.supervisor))
-    """
+    vac_for_supervisor = Vacations.objects.select_related('username').filter(username__supervisor=request.user, supervisor = 'На рассмотрении')
+
+    # for jun hr
+    if request.user.position == 'jun_hr':
+        vac_for_jun_hr = Vacations.objects.filter(jun_hr = 'На рассмотрении')
+    else:
+        vac_for_jun_hr = Vacations.objects.none()
+
+    vacations = vac_for_supervisor | vac_for_jun_hr
+
     context = {
         'vacations': vacations
     }
@@ -78,4 +82,20 @@ def sign_applications(request):
 
 @login_required
 def accept_applications(request, applications_id):
-    print(applications_id)
+    """
+    application = Vacations.objects.get(id=applications_id)
+    application.supervisor = 'Утверждено'
+    application.jun_hr = 'На рассмотрении'
+    application.save()
+    """
+    return redirect(sign_applications)
+
+
+@login_required
+def reject_applications(request, applications_id):
+    """
+    application = Vacations.objects.get(id=applications_id)
+    application.supervisor = 'Отклонено'
+    application.save()
+    """
+    return redirect(sign_applications)

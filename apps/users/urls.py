@@ -9,5 +9,6 @@ urlpatterns = [
     path('profile/vacation/addvacation/', views.add_vacation, name='add_vacation'),
     path('profile/application/', views.application, name='application'),
     path('sign_applications/', views.sign_applications, name='sign_applications'),
-    path('accept_applications/', views.accept_applications, name='accept_applications'),
+    path('accept_applications/<int:applications_id>/', views.accept_applications, name='accept_applications'),
+    path('reject_applications/<int:applications_id>/', views.reject_applications, name='reject_applications'),
 ]
