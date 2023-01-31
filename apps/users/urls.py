@@ -10,5 +10,5 @@ urlpatterns = [
     path('profile/application/', views.application, name='application'),
     path('sign_applications/', views.sign_applications, name='sign_applications'),
     path('accept_applications/<int:applications_id>/', views.accept_applications, name='accept_applications'),
-    path('reject_applications/<int:applications_id>/', views.reject_applications, name='reject_applications'),
+    path('reject_applications/', views.reject_applications, name='reject_applications'),
 ]

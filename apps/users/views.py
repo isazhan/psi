@@ -71,7 +71,19 @@ def sign_applications(request):
     else:
         vac_for_jun_hr = Vacations.objects.none()
 
-    vacations = vac_for_supervisor | vac_for_jun_hr
+    # for head hr
+    if request.user.position == 'head_hr':
+        vac_for_head_hr = Vacations.objects.filter(head_hr = 'На рассмотрении')
+    else:
+        vac_for_head_hr = Vacations.objects.none()
+
+    # for director
+    if request.user.position == 'director':
+        vac_for_director = Vacations.objects.filter(director = 'На рассмотрении')
+    else:
+        vac_for_director = Vacations.objects.none()
+
+    vacations = vac_for_supervisor | vac_for_jun_hr | vac_for_head_hr | vac_for_director
 
     context = {
         'vacations': vacations
@@ -82,20 +94,64 @@ def sign_applications(request):
 
 @login_required
 def accept_applications(request, applications_id):
-    """
-    application = Vacations.objects.get(id=applications_id)
-    application.supervisor = 'Утверждено'
-    application.jun_hr = 'На рассмотрении'
-    application.save()
-    """
+    # sign as supervisor
+    if Vacations.objects.select_related('username').get(id=applications_id).username.supervisor == str(request.user):
+        x = Vacations.objects.get(id=applications_id)
+        x.supervisor = 'Утверждено'
+        x.jun_hr = 'На рассмотрении'
+        x.save()
+
+    # sign as jun hr
+    if request.user.position == 'jun_hr':
+        x = Vacations.objects.get(id=applications_id)
+        x.jun_hr = 'Утверждено'
+        x.head_hr = 'На рассмотрении'
+        x.save()
+    
+    # sign as head hr
+    if request.user.position == 'head_hr':
+        x = Vacations.objects.get(id=applications_id)
+        x.head_hr = 'Утверждено'
+        x.director = 'На рассмотрении'
+        x.save()
+    
+    # sign as director
+    if request.user.position == 'director':
+        x = Vacations.objects.get(id=applications_id)
+        x.director = 'Утверждено'
+        x.save()
+
     return redirect(sign_applications)
 
 
 @login_required
-def reject_applications(request, applications_id):
-    """
-    application = Vacations.objects.get(id=applications_id)
-    application.supervisor = 'Отклонено'
-    application.save()
-    """
+def reject_applications(request):
+    # reject as supervisor
+    if Vacations.objects.select_related('username').get(id=request.POST['app-id']).username.supervisor == str(request.user):
+        x = Vacations.objects.get(id=request.POST['app-id'])
+        x.supervisor = 'Отклонено'
+        x.comments = request.POST['comment']
+        x.save()
+
+    # reject as jun hr
+    if request.user.position == 'jun_hr':
+        x = Vacations.objects.get(id=request.POST['app-id'])
+        x.jun_hr = 'Отклонено'
+        x.comments = request.POST['comment']
+        x.save()
+    
+    # reject as head hr
+    if request.user.position == 'head_hr':
+        x = Vacations.objects.get(id=request.POST['app-id'])
+        x.head_hr = 'Отклонено'
+        x.comments = request.POST['comment']
+        x.save()
+    
+    # reject as director
+    if request.user.position == 'director':
+        x = Vacations.objects.get(id=request.POST['app-id'])
+        x.director = 'Отклонено'
+        x.comments = request.POST['comment']
+        x.save()
+
     return redirect(sign_applications)

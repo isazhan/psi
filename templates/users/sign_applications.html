@@ -29,6 +29,7 @@
 
                                 <thead>
                                     <tr>
+                                        <th>id</th>
                                         <th>Created at</th>
                                         <th>Last name</th>
                                         <th>First name</th>
@@ -42,6 +43,7 @@
                                
                                 {% for x in vacations %}
                                     <tr>
+                                        <td>{{ x.id }}</td>
                                         <td>{{ x.current_time }}</td>
                                         <td>{{ x.username.last_name }}</td>
                                         <td>{{ x.username.first_name }}</td>
@@ -49,11 +51,47 @@
                                         <td>{{ x.startdate}}</td>
                                         <td>{{ x.finishdate }}</td>
                                         <td><a class="btn btn-success" href="/accept_applications/{{ x.id }}">Принять</a></td>
-                                        <td><a class="btn btn-danger" href="/reject_applications/{{ x.id }}">Отклонить</a></td>
+                                        <td><a class="btn btn-danger reject-btn" data-bs-toggle="modal" data-bs-target="#rejectModal" data-id="{{ x.id }}">Отклонить</a></td>
                                     </tr>
                                 {% endfor %}
-                       
+
                         </table>
+
+                        <!-- The Modal -->
+                        <div class="modal" id="rejectModal">
+                            <div class="modal-dialog">
+                                <div class="modal-content text-black">
+
+                                    <!-- Header -->
+                                    <div class="modal-header">
+                                        <h3 class="modal-title">Напишите комментарий</h3>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+
+                                    <!-- Body-->
+                                    <form class="p-3" action="{% url 'reject_applications' %}" method="POST">
+                                        {% csrf_token %}
+                                        <label>ID заявки:</label>
+                                        <input id="app-id" name="app-id" readonly><br>
+                                        <textarea class="form-control" name="comment" placeholder="Комментарий..."></textarea><br>
+                                        <button type="submit" class="btn btn-success">Отправить</button>
+                                    </form>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <!-- Script-->
+                        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+                        <script>
+                            $('.reject-btn').click(function() {
+                                document.getElementById("app-id").value = $(this).data('id');
+                                //$('#app-id').html($(this).data('id'));
+                            });
+                        </script>
+
                 </div>
             </div>
         </div>
