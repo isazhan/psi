@@ -155,3 +155,17 @@ def reject_applications(request):
         x.save()
 
     return redirect(sign_applications)
+
+@login_required
+def all_applications(request):
+    if request.user.position == 'jun_hr' or request.user.position == 'head_hr':
+        all_applications = Vacations.objects.all()
+    else:
+        all_applications = None
+    return render(request, 'users/all_applications.html', {'all_applications': all_applications})
+
+@login_required
+def delete_application(request):
+    if Vacations.objects.get(id=application.id).username == request.user:
+        application.delete()
+    return redirect(application)

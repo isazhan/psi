@@ -25,12 +25,13 @@
 
                 <div class="p-4">
                     
-                        Ваша таблица заявок
+                        Все заявки
                         
                         <table border="2" class="table table-bordered text-white">
                             <div class="text white">
                                 <thead>
                                     <tr>
+                                        <th>User</th>
                                         <th>Current time</th>
                                         <th>Start date</th>
                                         <th>Finish date</th>
@@ -39,13 +40,13 @@
                                         <th>Head HR</th>
                                         <th>Director</th>
                                         <th>Comments</th>
-                                        <th>Reject</th>
                                     </tr>
                                     
                                 </thead>
                                
-                                {% for x in applications %}
+                                {% for x in all_applications %}
                                     <tr>
+                                        <td>{{ x.username }}</td>
                                         <td>{{ x.current_time }}</td>
                                         <td>{{ x.startdate }}</td>
                                         <td>{{ x.finishdate }}</td>
@@ -54,7 +55,6 @@
                                         <td>{{ x.head_hr }}</td>
                                         <td>{{ x.director }}</td>
                                         <td>{{ x.comments }}</td>
-                                        <td><a class="btn btn-success" href="/delete_application/{{ x.id }}">Отменить заявку</a></td>
                                     </tr> 
                                 {% endfor %}
                             </div>
