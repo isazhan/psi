@@ -54,7 +54,12 @@
                                         <td>{{ x.head_hr }}</td>
                                         <td>{{ x.director }}</td>
                                         <td>{{ x.comments }}</td>
-                                        <td><a class="btn btn-success" href="/delete_application/{{ x.id }}">Отменить заявку</a></td>
+                                         <td>
+                                            {% if x.supervisor == 'На рассмотрении' %}
+                                            <a class="btn btn-success" href="/delete_application/{{ x.id }}">Отменить заявку</a>
+                                            {% endif %}
+                                        </td>
+                                    
                                     </tr> 
                                 {% endfor %}
                             </div>

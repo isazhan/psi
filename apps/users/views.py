@@ -165,7 +165,8 @@ def all_applications(request):
     return render(request, 'users/all_applications.html', {'all_applications': all_applications})
 
 @login_required
-def delete_application(request):
-    if Vacations.objects.get(id=application.id).username == request.user:
-        application.delete()
+def delete_application(request, application_id):
+    if Vacations.objects.get(id=application_id).username == request.user:
+        if Vacations.objects.get(id=application_id).supervisor == "На рассмотрении":
+            Vacations.objects.get(id=application_id).delete()
     return redirect(application)
