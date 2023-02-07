@@ -51,8 +51,9 @@ def add_vacation(request):
         startdate = request.POST['startdate']
         finishdate = request.POST['finishdate']
         duration = request.POST['duration']
-        is_by_schedule = request.POST['is_by_schedule']
-        data = Vacations(username=request.user, startdate=startdate, finishdate=finishdate, supervisor='На рассмотрении')
+        if request.POST['is_by_schedule'] == "on":
+            is_by_schedule = True
+        data = Vacations(username=request.user, startdate=startdate, finishdate=finishdate, duration=duration, is_by_schedule=is_by_schedule, supervisor='На рассмотрении')
         data.save()
         return render(request, 'users/vacation.html')
     else:
