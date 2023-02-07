@@ -3,7 +3,10 @@ from django.contrib.auth import authenticate, login, logout
 from django.template import loader
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
+from pip._internal.commands import download
 from .models import *
+from docxtpl import DocxTemplate
+from django.conf import settings
 
 
 def login_user(request):
@@ -47,6 +50,8 @@ def add_vacation(request):
     if request.method == "POST":
         startdate = request.POST['startdate']
         finishdate = request.POST['finishdate']
+        duration = request.POST['duration']
+        is_by_schedule = request.POST['is_by_schedule']
         data = Vacations(username=request.user, startdate=startdate, finishdate=finishdate, supervisor='На рассмотрении')
         data.save()
         return render(request, 'users/vacation.html')
@@ -170,3 +175,29 @@ def delete_application(request, application_id):
         if Vacations.objects.get(id=application_id).supervisor == "На рассмотрении":
             Vacations.objects.get(id=application_id).delete()
     return redirect(application)
+
+@login_required
+def download_application(request, application_id):
+    doc = DocxTemplate(settings.BASE_DIR / 'static/users/download_application.docx')
+
+    context = {
+        'surname': Vacations.objects.get(id=application_id).username,
+        'startdate': Vacations.objects.get(id=application_id).startdate,
+        'finishdate': Vacations.objects.get(id=application_id).finishdate,
+    }
+    filename = Vacations.objects.get(id=application_id).username
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
+    response['Content-Disposition'] = 'attachment; filename={}.docx'.format(filename)
+    doc.render(context)
+    doc.save(response)
+
+    return response
+
+
+   # doc.render(context)
+   # doc.save('application_output.docx')
+
+   # return redirect(all_applications)
+
+
+

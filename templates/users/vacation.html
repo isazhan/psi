@@ -29,7 +29,11 @@
                         <p class="h5">на предоставление ежегодного оплачиваемого трудового отпуска</p>
                         <form action="{% url 'add_vacation' %}" method="POST">
                             {% csrf_token %}
-
+                            <div>
+                                <input type="checkbox" name="byschedule"> 
+                                <span>По графику</span>
+                            </div>
+ 
                             <div>
                                 <label for="start" class="form-label">с</label>
                                 <input type="date" name="startdate">
@@ -38,6 +42,12 @@
                             <div>
                                 <label for="finish" class="form-label">по</label>
                                 <input type="date" name="finishdate">
+                            </div>
+                                <label for="duration" class="form-label">Количество календарных дней</label>
+                                <input type="number" name="duration">
+
+                            <div> 
+                                
                             </div>
 
                             <button type="submit" class="btn btn-success">Отправить запрос</button>

@@ -13,5 +13,6 @@ urlpatterns = [
     path('reject_applications/', views.reject_applications, name='reject_applications'),
     path('all_applications/', views.all_applications, name='all_applications'),
     path('delete_application/<int:application_id>/', views.delete_application, name='delete_application'),
+    path('download_application/<int:application_id>/', views.download_application, name='download_application'),
 
 ]

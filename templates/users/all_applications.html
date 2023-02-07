@@ -40,6 +40,7 @@
                                         <th>Head HR</th>
                                         <th>Director</th>
                                         <th>Comments</th>
+                                        <th>Document</th>
                                     </tr>
                                     
                                 </thead>
@@ -55,6 +56,10 @@
                                         <td>{{ x.head_hr }}</td>
                                         <td>{{ x.director }}</td>
                                         <td>{{ x.comments }}</td>
+                                        <td><a class="btn btn-success" href="/download_application/{{ x.id }}">Скачать заявление</a></td>
+                                            <!-- {% if x.director == 'Утверждено' %} -->
+                                            <!--<a class="btn btn-success" href="/download_application/{{ x.id }}"/{{ x.id }}">Скачать заявление</a></td>-->
+                                            <!-- {% endif %} -->
                                     </tr> 
                                 {% endfor %}
                             </div>
