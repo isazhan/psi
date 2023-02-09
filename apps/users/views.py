@@ -180,11 +180,17 @@ def delete_application(request, application_id):
 @login_required
 def download_application(request, application_id):
     doc = DocxTemplate(settings.BASE_DIR / 'static/users/download_application.docx')
+    if Vacations.objects.get(id=application_id).is_by_schedule == True:
+        schedule = 'по графику'
+    else:
+        schedule = 'вне графика'
 
     context = {
         'surname': Vacations.objects.get(id=application_id).username,
         'startdate': Vacations.objects.get(id=application_id).startdate,
         'finishdate': Vacations.objects.get(id=application_id).finishdate,
+        'duration': Vacations.objects.get(id=application_id).duration,
+        'schedule' : schedule,
     }
     filename = Vacations.objects.get(id=application_id).username
     response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
