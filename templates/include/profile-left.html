@@ -1,0 +1,28 @@
+<div class="sticky-top rounded-3 text-white" style="background-color: #21262D;">
+
+    <h3> Меню</h3>
+
+    <ul class="list-unstyled" class="text-decoration-none" >
+        <div class="dropdown-menu-end">
+            <ul class="dropdown-toggle" data-bs-toggle="dropdown">
+                Подать заявку
+            </ul>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{% url 'vacation' %}">Отпуск</a></li>
+                <li><a class="dropdown-item" href="">Командировка</a></li>
+                <li><a class="dropdown-item" href="">БС</a></li>
+                <li><a class="dropdown-item" href="">Отгулы</a></li>
+            </ul>
+        </div>
+
+        <div >
+            <a class="btn text-white" href="{% url 'application' %}"><li>Мои заявки</li></a>
+        </div>
+
+        <div>
+            <a class="btn text-white" href="{% url 'all_applications' %}"><li>Все заявки</li></a>
+        </div>
+
+    </ul>
+
+</div>
