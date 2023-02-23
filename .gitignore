@@ -3,3 +3,4 @@ venv/
 __pycache__/
 /psi/dbconfig.json
 /psi/secretkey.txt
+/apps/users/management/commands/token.txt

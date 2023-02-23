@@ -1,3 +1,4 @@
 Django==4.1.4
 psycopg2==2.9.5
 docxtpl==0.16.5
+mailru-im-bot==0.0.21
