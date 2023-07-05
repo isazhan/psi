@@ -6,6 +6,7 @@ from bot.handler import CommandHandler, BotButtonCommandHandler
 import secrets
 import string
 import json
+from db import get_db_handle
 
 
 TOKEN = open(settings.BASE_DIR / 'apps/users/management/commands/token.txt').read()
@@ -28,11 +29,13 @@ class Command(BaseCommand):
         
         def create_user(bot, event):
             if event.from_chat[-13:] == '@psi-group.kz':
-                User = get_user_model()
-                try:
-                    user = User.objects.get(username=event.from_chat[:-13])
+                #User = get_user_model()
+                #try:
+                if get_db_handle()['users'].count_documents({'email': event.from_chat}) > 0:
+                    #user = User.objects.get(username=event.from_chat[:-13])
                     bot.send_text(chat_id=event.from_chat, text='Вы уже получали первичный пароль!')
-                except:
+                #except:
+                else:
                     letters = string.ascii_letters
                     digits = string.digits
                     alphabet = letters + digits
@@ -40,8 +43,19 @@ class Command(BaseCommand):
                     pwd = ''
                     for i in range(pwd_length):
                         pwd += ''.join(secrets.choice(alphabet))
-                    user = User.objects.create_user(event.from_chat[:-13], event.from_chat, pwd)
-                    user.save()
+                    ########
+
+                    col = get_db_handle()['users']
+                    val = {
+                        'email': event.from_chat,
+                        'password': '123456789',
+                        'first_name': 'firstname',
+                        'last_name': 'lastname',
+                        }
+                    col.insert_one(val)
+                    #user = User.objects.create_user(event.from_chat[:-13], event.from_chat, pwd)
+                    #user.save()
+
                     bot.send_text(chat_id=event.from_chat, text='Поздравляем! Ваша учетная запись успешно создана. Ваш пароль для входа на сайт: \n\n{}'.format(pwd))
                     bot.send_text(chat_id=event.from_chat, text='Сайт доступен по ссылке: \nhttp://192.168.1.33:8000')
             else:

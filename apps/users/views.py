@@ -4,18 +4,21 @@ from django.template import loader
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from pip._internal.commands import download
-from .models import *
+#from .models import *
 from docxtpl import DocxTemplate
 from django.conf import settings
+from .models import UserBackend
+from django.contrib.auth.backends import ModelBackend
 
 
 def login_user(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
-        user = authenticate(username=username, password=password)
+        #user = authenticate(username=username, password=password)
+        user = UserBackend.authenticate(ModelBackend(), email=username, password=password)
         if user is not None:
-            login(request, user)
+            login(request, user, backend='apps.users.models.UserBackend')
             return redirect('/')
         else:
             return render(request, 'users/login.html', {'title': 'Страница входа'})
