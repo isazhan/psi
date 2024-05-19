@@ -1,56 +1,35 @@
-from typing import Any, Optional
-from django.contrib.auth.base_user import AbstractBaseUser
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
-from django.contrib.auth.models import AbstractUser
-from django.conf import settings
-from django.contrib.auth.backends import ModelBackend
-from django.http.request import HttpRequest
-from db import get_db_handle
-from django.contrib.auth.hashers import check_password, make_password
 
-"""
-class CustomUser(AbstractUser):
-    supervisor = models.CharField(max_length=30, blank=True)
-    position = models.CharField(max_length=30, blank=True)
-    patronymic = models.CharField(max_length=30, blank=True)
+class CustomUserManager(BaseUserManager):
+    def create_user(self, email, password=None, **extra_fields):
+        if not email:
+            raise ValueError('The Email field must be set')
+        email = self.normalize_email(email)
+        user = self.model(email=email, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
 
-class Vacations(models.Model):
-    username = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    current_time = models.DateTimeField(auto_now_add=True)
-    is_by_schedule = models.BooleanField(null=True)
-    startdate = models.DateField()
-    finishdate = models.DateField()
-    duration = models.IntegerField(null=True)
-    supervisor = models.CharField(max_length=30, blank=True)
-    jun_hr = models.CharField(max_length=30, blank=True)
-    head_hr = models.CharField(max_length=30, blank=True)
-    director = models.CharField(max_length=30, blank=True)
-    comments = models.CharField(max_length=100, blank=True)
-"""
+    def create_superuser(self, email, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+        return self.create_user(email, password, **extra_fields)
 
-class UserBackend(ModelBackend):
+class CustomUser(AbstractBaseUser, PermissionsMixin):
+    email = models.EmailField(unique=True)
+    first_name = models.CharField(max_length=30)
+    last_name = models.CharField(max_length=30)
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
 
-    def authenticate(self, **kwargs):
-        email = kwargs['email']
-        password = kwargs['password']
-        print(type(email), type(password))
-        try:
-            user = get_db_handle()['users'].find_one({'email': email}, {'_id': 0, 'email': 1, 'password': 1})
-            print(user)
-            #get_db_handle()['users'].update_one({'email': 'u.isazhan@psi-group.kz'}, { '$set': {'password': make_password('123456789')}})
-            #if user['password'] == password:
+    objects = CustomUserManager()
 
-            if check_password(password, user['password']) is True:
-                print('right password')
-                return user['email']
-            else:
-                print('wrong password')
-                return None
-        except:
-            return None
-    
-    def get_user(self, user_id):
-        try:
-            return get_db_handle()['users'].find_one({'email': user_id})
-        except:
-            return None
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
+
+    #groups = models.ManyToManyField('auth.Group', related_name='custom_user_groups')
+    #user_permissions = models.ManyToManyField('auth.Permission', related_name='custom_user_permissions')
+
+    def __str__(self):
+        return self.email

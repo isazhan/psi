@@ -76,7 +76,7 @@ WSGI_APPLICATION = 'psi.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = json.load(open(BASE_DIR / 'psi/dbconfig.json'))
+DATABASES = json.load(open(BASE_DIR / 'dbconfig.json'))
 
 
 # Password validation
@@ -127,10 +127,10 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-#AUTH_USER_MODEL = 'users.UserModel'
+AUTH_USER_MODEL = 'users.CustomUser'
 
 LOGIN_URL = '/login'
 LOGOUT_URL = '/login'
 
-AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend',
-                           'apps.users.models.UserBackend']
+#AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend',
+#                           'apps.users.models.UserBackend']
