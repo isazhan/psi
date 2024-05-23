@@ -1,0 +1,31 @@
+<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#myModal">
+    Создать новый проект
+</button>
+  
+<!-- The Modal -->
+<div class="modal" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+  
+        <!-- Modal Header -->
+        <div class="modal-header">
+            <h4 class="modal-title">Создать новый проект</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+  
+        <!-- Modal body -->
+        <div class="modal-body">            
+
+            <form action="{% url 'index' %}" method="POST">
+                {% csrf_token %}
+                <input type="number" name="project_number">
+                <input type="text" name="project_name">
+                <input type="text" name="project_status" value="active" hidden>
+                <button type="submit" class="btn btn-success">Создать</button>
+            </form>
+            
+        </div>        
+  
+      </div>
+    </div>
+</div>

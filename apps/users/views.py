@@ -13,7 +13,7 @@ from django.contrib.auth.backends import ModelBackend
 
 def login_user(request):
     if request.method == 'POST':
-        username = request.POST['username']
+        username = request.POST['username'] + '@psi-group.kz'
         password = request.POST['password']
         user = authenticate(username=username, password=password)
         #user = UserBackend.authenticate(ModelBackend(), email=username, password=password)
@@ -42,7 +42,7 @@ def profile(request):
     template = loader.get_template('users/profile.html')
     return HttpResponse(template.render(context, request))
 
-
+"""
 @login_required
 def vacation(request):
     return render(request, 'users/vacation.html')
@@ -208,6 +208,4 @@ def download_application(request, application_id):
    # doc.save('application_output.docx')
 
    # return redirect(all_applications)
-
-
-
+"""
