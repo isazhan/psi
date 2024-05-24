@@ -1,0 +1,30 @@
+{% extends '../base/base.html' %}
+
+{% block content %}
+{% load static %}
+
+{% include '../include/create_equipment.html' %}
+
+<table>
+    <tr>
+        <th>WBS</th>
+        <th>Код</th>
+        <th>Номер</th>
+        <th>Таговый номер</th>
+        <th>Действия</th>
+    </tr>
+    {% for x in equipment_list %}
+    <tr>
+        <td>{{ x.equipment_wbs }}</td>
+        <td>{{ x.equipment_code }}</td>
+        <td>{{ x.equipment_number }}</td>
+        <td>{{ x.equipment_tag }}</td>
+        <td>
+            <a class="btn" href="{% url 'equipment' project_number x.equipment_tag %}">Изменить</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+{% endblock content %}

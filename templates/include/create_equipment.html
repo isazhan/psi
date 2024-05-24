@@ -1,0 +1,43 @@
+<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#myModal">
+    Добавить новое оборудование
+</button>
+  
+<!-- The Modal -->
+<div class="modal" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+  
+        <!-- Modal Header -->
+        <div class="modal-header">
+            <h4 class="modal-title">Добавить новое оборудование</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+  
+        <!-- Modal body -->
+        <div class="modal-body">            
+
+            <form action="{% url 'equipment_list' project_number %}" method="POST" name="create_equipment">
+                {% csrf_token %}
+                <input type="number" name="equipment_wbs" required>
+                <input type="text" name="equipment_code" required>
+                <input type="number" name="equipment_number" required>
+                <input type="text" name="equipment_tag" readonly>
+                <button type="submit" class="btn btn-success">Создать</button>
+            </form>
+            
+        </div>        
+  
+      </div>
+    </div>
+</div>
+<script>
+    let form = document.forms['create_equipment']
+    form.addEventListener('input', equipmentTag);
+    
+    function equipmentTag() {
+        form['equipment_tag'].value = 
+        form['equipment_wbs'].value + '-' +
+        form['equipment_code'].value + '-' +
+        form['equipment_number'].value
+    }    
+</script>
