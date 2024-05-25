@@ -14,7 +14,7 @@
         </div>
   
         <!-- Modal body -->
-        <div class="modal-body">            
+        <div class="modal-body">
 
             <form action="{% url 'equipment_list' project_number %}" method="POST" name="create_equipment">
                 {% csrf_token %}
@@ -22,6 +22,10 @@
                 <input type="text" name="equipment_code" required>
                 <input type="number" name="equipment_number" required>
                 <input type="text" name="equipment_tag" readonly>
+                <select name="equipment_type">
+                    <option value="pump_centrifugal">Насос центробежный</option>
+                    <option value="tank">Резервуар</option>
+                </select>
                 <button type="submit" class="btn btn-success">Создать</button>
             </form>
             

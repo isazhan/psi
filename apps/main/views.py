@@ -55,4 +55,21 @@ def equipment_list(request, project_number):
 
 @login_required
 def equipment(request, project_number, equipment_tag):
-    return
+    if request.method == 'POST':
+        col = db()[project_number+'equipment_list']
+        query = {'equipment_tag': equipment_tag}
+        value = {'$set': request.POST.dict()}
+        x = col.update_one(query, value)
+        return redirect('equipment_list', project_number)
+    else:
+        col = db()[project_number+'equipment_list']
+        query = {'equipment_tag': equipment_tag}
+        doc = col.find_one(query)
+
+        context = {
+            'project_number': project_number,
+            'equipment': doc,
+        }
+
+        template = loader.get_template('main/equipment.html')
+        return HttpResponse(template.render(context, request))

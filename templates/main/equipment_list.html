@@ -5,26 +5,36 @@
 
 {% include '../include/create_equipment.html' %}
 
-<table>
-    <tr>
-        <th>WBS</th>
-        <th>Код</th>
-        <th>Номер</th>
-        <th>Таговый номер</th>
-        <th>Действия</th>
-    </tr>
-    {% for x in equipment_list %}
-    <tr>
-        <td>{{ x.equipment_wbs }}</td>
-        <td>{{ x.equipment_code }}</td>
-        <td>{{ x.equipment_number }}</td>
-        <td>{{ x.equipment_tag }}</td>
-        <td>
-            <a class="btn" href="{% url 'equipment' project_number x.equipment_tag %}">Изменить</a>
-        </td>
-    </tr>
-    {% endfor %}
+<table id="equipment_list" class="table table-bordered table-dark display" style="width:100%">
+    <thead>
+        <tr>
+            <th>WBS</th>
+            <th>Код</th>
+            <th>Номер</th>
+            <th>Таговый номер</th>
+            <th>Тип оборудования</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for x in equipment_list %}
+        <tr> 
+            <td>{{ x.equipment_wbs }}</td>
+            <td>{{ x.equipment_code }}</td>
+            <td>{{ x.equipment_number }}</td>
+            <td>{{ x.equipment_tag }}</td>
+            <td>{{ x.equipment_type }}</td>
+            <td>
+                <a class="btn btn-success" href="{% url 'equipment' project_number x.equipment_tag %}">Свойства</a>
+                <a class="btn btn-danger" href="{% url 'equipment' project_number x.equipment_tag %}">Удалить</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
 </table>
 
+<script>
+    new DataTable('#equipment_list', {});
+</script>
 
 {% endblock content %}
