@@ -3,46 +3,20 @@
 {% block content %}
 {% load static %}
 
+
+
 {% include '../include/create_project.html' %}
 
 {% for x in projects %}
 
-    <div class="card p-4 rounded-3 text-white mb-5" style="background-color: #21262D;">
-        <div class="card-tittle row" >
-            <div class="col-sm">
-                <h4>{{ x.project_number }} - {{ x.project_name }} </h4>
-            </div>
-
-
-            <div class="col-sm p-3" >
-                <p class="text-end">Статус: {{ x.project_status }} </p>
-
-            </div>
-            
-            
-        </div>
-
-        <div class="card-body row">
-
-            <div class="col-sm-3">
-
-            </div>
-
-            <div class="col-sm p-2">
-                
-                <p class="card-text">Заказчик: {{ x.customer }}</p>
-                <p class="card-text">ПМ: {{ x.manager }}</p>
-            
-            </div>
-
-        </div>
-
-        <div class="card-footer">
-            <a href="projects/{{ x.project_number }}" class="btn btn-success">Перейти в проект</a>
-        </div>
-
-
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">{{ x.project_number }} - {{ x.project_name }}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">Статус: {{ x.project_status }}</h6>
+        <p class="card-text"></p>        
+        <a href="projects/{{ x.project_number }}" class="card-link">Перейти в проект</a>
     </div>
+</div>
 
 
 {% endfor %}

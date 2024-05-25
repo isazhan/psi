@@ -24,6 +24,24 @@ def index(request):
 
 
 @login_required
+def access(request):
+    if request.user.email == 'u.isazhan@psi-group.kz':
+        if request.method == 'POST':
+            col = db()['access']
+        else:
+            col = db()['access']
+            doc = col.find({})
+            context = {
+                'access': doc
+            }
+            template = loader.get_template('main/access.html')
+            return HttpResponse(template.render(context, request))
+    else:
+        return redirect('index')
+
+
+
+@login_required
 def project(request, project_number):
 
     context = {
