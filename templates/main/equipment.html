@@ -3,9 +3,43 @@
 {% block content %}
 {% load static %}
 
+<div class="pagetitle">
+    <h1>Свойства {{ equipment.equipment_tag }}</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Главная</a></li>
+            <li class="breadcrumb-item"><a href="/projects/{{ project_number }}">{{ project_number }}</a></li>
+            <li class="breadcrumb-item"><a href="/projects/{{ project_number }}/equipment_list">Equipment List</a></li>
+            <li class="breadcrumb-item active">{{ equipment.equipment_tag }}</li>
+        </ol>
+    </nav>
+</div>
 
-{% if equipment.equipment_type == 'pump_centrifugal' %}
-    {% include '../include/equipment/pump_centrifugal.html' %}
-{% endif %}
+<section class="section">
+    <form action="{% url 'equipment' project_number equipment.equipment_tag %}" method="POST">
+        {% csrf_token %}
+        <div class="row">
+        
+            <!--Left side-->
+            <div class="col-lg-6">                       
+                {% include '../include/equipment/general.html' %}                
+            </div>
+            <!--Right side-->
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Общее</h5>
+                        
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        
+        <button type="submit" class="btn btn-success">Сохранить</button>
+           
+    </form>
+</section>
+
 
 {% endblock content %}

@@ -43,9 +43,12 @@ def access(request):
 
 @login_required
 def project(request, project_number):
+    col = db()['projects']
+    doc = col.find_one({'project_number': project_number})
 
     context = {
-        'project_number': project_number
+        'project_number': project_number,
+        'project_name': doc['project_name'],
     }
     
     template = loader.get_template('main/project.html')

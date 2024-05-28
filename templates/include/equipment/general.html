@@ -1,0 +1,82 @@
+<div class="card">
+    <div class="card-body">
+
+        <h5 class="card-title">Общее</h5>
+
+        <div class="row mb-3">
+            <label for="inputText" class="col-sm-3 col-form-label">Таговый номер</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" value="{{ equipment.equipment_tag }}" disabled>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label for="inputText" class="col-sm-3 col-form-label">Тип оборудования</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" value="{{ equipment.equipment_type }}" disabled>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label for="inputText" class="col-sm-3 col-form-label">Номер объекта</label>
+            <div class="col-sm-9">
+                <input type="number" class="form-control" name="equipment_area" value="{{ equipment.equipment_area }}">
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label for="inputText" class="col-sm-3 col-form-label">Наименование на английском</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="equipment_name_en" value="{{ equipment.equipment_name_en }}">
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label for="inputText" class="col-sm-3 col-form-label">Наименование на русском</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="equipment_name_ru" value="{{ equipment.equipment_name_ru }}">
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label for="inputText" class="col-sm-3 col-form-label">Масса, кг</label>
+            <div class="col-sm-9">
+                <input type="number" class="form-control" name="equipment_weight" value="{{ equipment.equipment_weight }}">
+            </div>
+        </div>
+        
+        <fieldset class="row mb-3">
+            <legend class="col-form-label col-sm-3 pt-0">Режим работы</legend>
+            <div class="col-sm-9">
+                <div class="form-check">
+                    {% if equipment.equipment_work_mode == 'duty' %}
+                    <input class="form-check-input" type="radio" name="equipment_work_mode" value="duty" checked>
+                    {% else %}
+                    <input class="form-check-input" type="radio" name="equipment_work_mode" value="duty">
+                    {% endif %}
+                    <label class="form-check-label" for="gridRadios1">
+                        Рабочий
+                    </label>
+                </div>
+                <div class="form-check">
+                    {% if equipment.equipment_work_mode == 'standby' %}
+                    <input class="form-check-input" type="radio" name="equipment_work_mode" value="standby" checked>
+                    {% else %}
+                    <input class="form-check-input" type="radio" name="equipment_work_mode" value="standby">
+                    {% endif %}
+                    <label class="form-check-label" for="gridRadios2">
+                        Резервный
+                    </label>
+                </div>
+            </div>
+        </fieldset>
+
+        <div class="row mb-3">
+            <label for="inputText" class="col-sm-3 col-form-label">Номер опросного листа</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="equipment_datasheet" value="{{ equipment.equipment_datasheet }}">
+            </div>
+        </div>
+
+    </div>
+</div>

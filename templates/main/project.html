@@ -3,7 +3,15 @@
 {% block content %}
 {% load static %}
 
-{{ project_number }}
+<div class="pagetitle">
+    <h1>{{ project_number }} - {{ project_name }}</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Главная</a></li>
+            <li class="breadcrumb-item active">{{ project_number }}</li>
+        </ol>
+    </nav>
+</div>
 
 <a href="equipment_list/" class="btn btn-success">Equipment List</a>
 
