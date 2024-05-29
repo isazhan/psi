@@ -16,18 +16,55 @@
         <!-- Modal body -->
         <div class="modal-body">
 
-            <form action="{% url 'equipment_list' project_number %}" method="POST" name="create_equipment">
-                {% csrf_token %}
-                <input type="number" name="equipment_wbs" required>
-                <input type="text" name="equipment_code" required>
-                <input type="number" name="equipment_number" required>
-                <input type="text" name="equipment_tag" readonly>
-                <select name="equipment_type">
-                    <option value="pump_centrifugal">Насос центробежный</option>
-                    <option value="tank">Резервуар</option>
-                </select>
-                <button type="submit" class="btn btn-success">Создать</button>
-            </form>
+            <div class="card">
+                <div class="card-body">
+                    <form action="{% url 'equipment_list' project_number %}" method="POST" name="create_equipment">
+                        {% csrf_token %}
+
+                        <div class="row mb-3">
+                            <label for="inputText" class="col-sm-4 col-form-label">WBS</label>
+                            <div class="col-sm-8">
+                                <input type="number" class="form-control" name="equipment_wbs" required>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="inputText" class="col-sm-4 col-form-label">Код оборудования</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="equipment_code" required>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="inputText" class="col-sm-4 col-form-label">Порядковый номер</label>
+                            <div class="col-sm-8">
+                                <input type="number" class="form-control" name="equipment_number" required>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="inputText" class="col-sm-4 col-form-label">Таговый номер</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="equipment_tag" readonly>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label">Тип оборудования</label>
+                            <div class="col-sm-8">
+                                <select class="form-select" aria-label="Default select example" required>
+                                    <option disabled selected value="">Выберите</option>
+                                    <option value="pump_centrifugal">Насос центробежный</option>
+                                    <option value="tank">Резервуар</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-success">Добавить</button>
+
+                    </form>
+                </div>
+            </div>           
             
         </div>        
   

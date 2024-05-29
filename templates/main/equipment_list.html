@@ -21,7 +21,7 @@
                 <div class="card-body">
                     
                     {% include '../include/create_equipment.html' %}
-                    <table id="equipment_list" class="table datatable table-bordered table-dark">
+                    <table id="equipment_list" class="table datatable">
                         <thead>
                             <tr>
                                 <th>Номер объекта</th>
@@ -67,7 +67,12 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", () => {
-        new DataTable('#equipment_list', {});
+        new DataTable('#equipment_list', {
+            lengthMenu: [
+                [10, 25, 50, -1],
+                [10, 25, 50, 'All']
+            ]
+        });
     });
 </script>
 
