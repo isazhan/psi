@@ -21,7 +21,7 @@
                 <div class="card-body">
                     
                     {% include '../include/create_equipment.html' %}
-                    <table id="equipment_list" class="table datatable">
+                    <table id="equipment_list" class="table datatable" width="100%">
                         <thead>
                             <tr>
                                 <th>Номер объекта</th>
@@ -68,12 +68,31 @@
 <script>
     document.addEventListener("DOMContentLoaded", () => {
         new DataTable('#equipment_list', {
+            scrollX: true,
+            layout: {
+                top1: 'searchPanes',
+                topEnd: {
+                    buttons: ['excel']
+                }
+            },
+            searchPanes: {
+                threshold: 1,
+                initCollapsed: true
+            },
             lengthMenu: [
                 [10, 25, 50, -1],
                 [10, 25, 50, 'All']
+            ],
+            columnDefs: [
+                {
+                    targets: 4,
+                    createdCell: function (td) {
+                        $(td).css('background-color', '#8cb6dc')
+                    }
+                }
             ]
         });
-    });
+    });  
 </script>
 
 {% endblock content %}
