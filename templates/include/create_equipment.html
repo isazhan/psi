@@ -47,6 +47,9 @@
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" name="equipment_tag" readonly>
                             </div>
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert" id="alert" hidden>
+                                Данный таговый номер уже присутствует в проекте
+                            </div>
                         </div>
 
                         <div class="row mb-3">
@@ -60,9 +63,14 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-success">Добавить</button>
+                        <button type="submit" class="btn btn-success" id="create_equipment_button">Добавить</button>
 
                     </form>
+                    <ul hidden id="tags">
+                        {% for x in equipment_tags %}
+                        <li>{{ x.equipment_tag }}</li>
+                        {% endfor %}
+                    </ul>
                 </div>
             </div>           
             
@@ -79,6 +87,15 @@
         form['equipment_tag'].value = 
         form['equipment_wbs'].value + '-' +
         form['equipment_code'].value + '-' +
-        form['equipment_number'].value
-    }    
+        form['equipment_number'].value;
+
+        document.getElementById('create_equipment_button').disabled = false;
+        document.getElementById('alert').hidden = true;
+        $("#tags li").each((id, elem) => {
+            if (elem.innerText == form['equipment_tag'].value) {
+                document.getElementById('create_equipment_button').disabled = true;
+                document.getElementById('alert').hidden = false;
+            }
+        });
+    }
 </script>

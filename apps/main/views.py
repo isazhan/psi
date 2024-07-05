@@ -63,11 +63,13 @@ def equipment_list(request, project_number):
         return redirect('equipment_list', project_number)
     else:
         col = db()[project_number+'equipment_list']
-        doc = col.find({})
+        equipment_list = col.find({})
+        equipment_tags = col.find({}, {"_id": 0, "equipment_tag": 1})
 
         context = {
             'project_number': project_number,
-            'equipment_list': doc,
+            'equipment_list': equipment_list,
+            'equipment_tags': equipment_tags,
         }
         
         template = loader.get_template('main/equipment_list.html')

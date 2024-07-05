@@ -51,8 +51,8 @@
                                 <td>{{ x.equipment_weight }}</td>
                                 <td>{{ x.equipment_work_mode }}</td>
                                 <td>
-                                    <a class="btn btn-success" href="{% url 'equipment' project_number x.equipment_tag %}">Свойства</a>
-                                    <a class="btn btn-danger" href="{% url 'equipment' project_number x.equipment_tag %}">Удалить</a>
+                                    <a class="btn btn-success btn-sm" href="{% url 'equipment' project_number x.equipment_tag %}">Свойства</a>
+                                    <a class="btn btn-danger btn-sm" href="#">Удалить</a>
                                 </td>
                             </tr>
                             {% endfor %}
@@ -87,7 +87,7 @@
                 {
                     targets: 4,
                     createdCell: function (td) {
-                        $(td).css('background-color', '#8cb6dc')
+                        $(td).css('background-color', '#9BC89E')
                     }
                 }
             ]
