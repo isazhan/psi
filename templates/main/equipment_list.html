@@ -4,11 +4,12 @@
 {% load static %}
 
 <div class="pagetitle">
+    <h1>{{ project_number }} - {{ project_name }}</h1>
     <h1>Equipment List</h1>
     <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Главная</a></li>
-            <li class="breadcrumb-item"><a href="/projects/{{ project_number }}">{{ project_number }}</a></li>
+            <li class="breadcrumb-item"><a href="/projects/{{ project_id }}">{{ project_id }}</a></li>
             <li class="breadcrumb-item active">Equipment List</li>
         </ol>
     </nav>
@@ -51,7 +52,7 @@
                                 <td>{{ x.equipment_weight }}</td>
                                 <td>{{ x.equipment_work_mode }}</td>
                                 <td>
-                                    <a class="btn btn-success btn-sm" href="{% url 'equipment' project_number x.equipment_tag %}">Свойства</a>
+                                    <a class="btn btn-success btn-sm" href="{% url 'equipment' project_id x.equipment_tag %}">Свойства</a>
                                     <a class="btn btn-danger btn-sm" href="#">Удалить</a>
                                 </td>
                             </tr>

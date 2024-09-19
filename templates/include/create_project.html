@@ -14,15 +14,39 @@
         </div>
   
         <!-- Modal body -->
-        <div class="modal-body">            
+        <div class="modal-body">
 
-            <form action="{% url 'index' %}" method="POST">
-                {% csrf_token %}
-                <input type="number" name="project_number">
-                <input type="text" name="project_name">
-                <input type="text" name="project_status" value="active" hidden>
-                <button type="submit" class="btn btn-success">Создать</button>
-            </form>
+            <div class="card">
+                <div class="card-body">
+
+                    <form action="{% url 'index' %}" method="POST">
+                        {% csrf_token %}                      
+
+                        <div class="row mb-3">
+                            <label for="inputText" class="col-sm-4 col-form-label">Наименование проекта</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="project_name" required>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="inputText" class="col-sm-4 col-form-label">Номер проекта</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="project_number" required>
+                            </div>
+                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                Если номер проекта еще не присвоен, то можно поставить как "XXX".
+                                В будущем, в настройке проекта можно изменить.
+                            </div>
+                        </div>
+
+                        <input type="text" name="project_status" value="active" hidden>
+
+                        <button type="submit" class="btn btn-success">Создать</button>
+                    </form>
+
+                </div>
+            </div>            
             
         </div>        
   

@@ -8,8 +8,18 @@ from django.shortcuts import render, redirect
 @login_required
 def index(request):
     if request.method == 'POST':
+        data = request.POST.dict()
         col = db()['projects']
-        x = col.insert_one(request.POST.dict())
+
+        doc = col.find({}, {'_id': 0, 'project_id': 1}).sort('_id', -1).limit(1)
+        try:
+            project_id = doc[0]['project_id'] + 1
+        except:
+            project_id = 100000
+        
+        data['project_id'] = project_id
+
+        x = col.insert_one(data)
         
     col = db()['projects']
     doc = col.find({})
@@ -42,12 +52,13 @@ def access(request):
 
 
 @login_required
-def project(request, project_number):
+def project(request, project_id):
     col = db()['projects']
-    doc = col.find_one({'project_number': project_number})
+    doc = col.find_one({'project_id': project_id})
 
     context = {
-        'project_number': project_number,
+        'project_id': project_id,
+        'project_number': doc['project_number'],
         'project_name': doc['project_name'],
     }
     
@@ -56,18 +67,20 @@ def project(request, project_number):
 
 
 @login_required
-def equipment_list(request, project_number):
+def equipment_list(request, project_id):
     if request.method == 'POST':
-        col = db()[project_number+'equipment_list']
+        col = db()[str(project_id)+'equipment_list']
         x = col.insert_one(request.POST.dict())
-        return redirect('equipment_list', project_number)
+        return redirect('equipment_list', project_id)
     else:
-        col = db()[project_number+'equipment_list']
+        col = db()[str(project_id)+'equipment_list']
         equipment_list = col.find({})
         equipment_tags = col.find({}, {"_id": 0, "equipment_tag": 1})
 
         context = {
-            'project_number': project_number,
+            'project_id': project_id,
+            'project_number': db()['projects'].find_one({'project_id': project_id})['project_number'],
+            'project_name': db()['projects'].find_one({'project_id': project_id})['project_name'],
             'equipment_list': equipment_list,
             'equipment_tags': equipment_tags,
         }
@@ -77,20 +90,22 @@ def equipment_list(request, project_number):
 
 
 @login_required
-def equipment(request, project_number, equipment_tag):
+def equipment(request, project_id, equipment_tag):
     if request.method == 'POST':
-        col = db()[project_number+'equipment_list']
+        col = db()[str(project_id)+'equipment_list']
         query = {'equipment_tag': equipment_tag}
         value = {'$set': request.POST.dict()}
         x = col.update_one(query, value)
-        return redirect('equipment_list', project_number)
+        return redirect('equipment_list', project_id)
     else:
-        col = db()[project_number+'equipment_list']
+        col = db()[str(project_id)+'equipment_list']
         query = {'equipment_tag': equipment_tag}
         doc = col.find_one(query)
 
         context = {
-            'project_number': project_number,
+            'project_id': project_id,
+            'project_number': db()['projects'].find_one({'project_id': project_id})['project_number'],
+            'project_name': db()['projects'].find_one({'project_id': project_id})['project_name'],
             'equipment': doc,
         }
 

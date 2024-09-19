@@ -3,21 +3,28 @@
 {% block content %}
 {% load static %}
 
-
+<div class="pagetitle">
+    <h2>Главная</h2>
+</div>
 
 {% include '../include/create_project.html' %}
 
-{% for x in projects %}
-
-<div class="card">
-    <div class="card-body">
-        <h5 class="card-title">{{ x.project_number }} - {{ x.project_name }}</h5>
-        <h6 class="card-subtitle mb-2 text-muted">Статус: {{ x.project_status }}</h6>
-        <p class="card-text"></p>        
-        <a href="projects/{{ x.project_number }}" class="card-link">Перейти в проект</a>
-    </div>
+<div class="pagetitle mt-3">
+    <h1>Проекты</h1>
 </div>
 
-
+{% for x in projects %}
+<div class="row mt-3">
+    <div class="col-xxl-2 col-xl-3 col-md-4 col-sm-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ x.project_number }} - {{ x.project_name }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Статус: {{ x.project_status }}</h6>
+                <p class="card-text"></p>        
+                <a href="projects/{{ x.project_id }}" class="card-link">Перейти в проект</a>
+            </div>
+        </div>
+    </div>
+</div>
 {% endfor %}
 {% endblock content %}

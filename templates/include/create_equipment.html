@@ -18,7 +18,7 @@
 
             <div class="card">
                 <div class="card-body">
-                    <form action="{% url 'equipment_list' project_number %}" method="POST" name="create_equipment">
+                    <form action="{% url 'equipment_list' project_id %}" method="POST" name="create_equipment">
                         {% csrf_token %}
 
                         <div class="row mb-3">
